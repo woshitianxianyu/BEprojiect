@@ -23,12 +23,8 @@
   Vue.prototype.$axios = axios;
 
 export default {
-  data(){
-    return{
-
-    }
-  },
-  name: 'App',
+  
+  name:'App',
 }
 </script>
 
