@@ -24,7 +24,7 @@
                     background-color="#545c64"
                     text-color="#fff"
                     active-text-color="#ffd04b">
-                    <el-submenu :index="idx+1"  v-for="(tab,idx) in tabs" >
+                    <el-submenu :index="idx+1+''"  v-for="(tab,idx) in tabs" >
                       <template slot="title" >
                        <i :class=" 'el-icon-'+tab.icon"></i>
                         <span>{{tab.title}}</span>
