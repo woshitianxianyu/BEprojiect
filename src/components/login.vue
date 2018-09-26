@@ -18,7 +18,7 @@
             </el-form-item>
 
                 <el-form-item>
-                 <el-checkbox-group v-moudel="ruleForm2.type">
+                 <el-checkbox-group @moudel="ruleForm2.type">
                   <el-checkbox label="记住密码" name="type"></el-checkbox>
                   <!-- <el-checkbox label="地推活动" name="type"></el-checkbox> -->
                 </el-checkbox-group>
@@ -70,7 +70,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
-            this.$router.push({path:'home'});
+            this.$router.push({path:'home/fenlei'});
           } else {
             console.log('error submit!!');
             return false;
