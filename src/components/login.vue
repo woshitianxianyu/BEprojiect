@@ -51,7 +51,7 @@
         ruleForm2: {
             pass: '',
             checkPass: '',
-            type: [],
+            type: ['2'],
         
         },
         rules2: {
@@ -68,9 +68,24 @@
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
+          this.$axios({
+              url:'/api/login',
+              method:'post',
+              data:(()=>{
+                    let data = '';
+                    for(let key in this.ruleForm2){
+                        data += key + '=' + this.ruleForm2[key] + '&'
+                    }
+                    data = data.slice(0);
+                    console.log(data)
+                    return data;
+                })(),
+          }).then(res=>{
+              console.log(res)
+          })
           if (valid) {
-            alert('submit!');
-            this.$router.push({path:'home/fenlei'});
+            // alert('submit!');
+            // this.$router.push({path:'home/fenlei'});
           } else {
             console.log('error submit!!');
             return false;
@@ -94,6 +109,9 @@
         left: 50%;
         top:50%;
         transform:translate(-50%, -50%);
+    }
+    h2{
+      text-align: center;
     }
 
 </style>
