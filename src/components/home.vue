@@ -30,7 +30,7 @@
                         <span>{{tab.title}}</span>
                       </template>
                       <el-menu-item-group v-for="(item,i) in tab.items">
-                      <el-menu-item :id="item.id"  :index="tab.idx +'-'+ i" @click.native="getmenu(item.id)" >{{item.name}}</el-menu-item>
+                      <el-menu-item :id="item.id" :key="i" :index="tab.idx +'-'+ i" @click.native="getmenu(item.id)" >{{item.name}}</el-menu-item>
                       
                       </el-menu-item-group>
                   
