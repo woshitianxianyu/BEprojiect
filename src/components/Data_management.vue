@@ -14,8 +14,9 @@
             </el-form-item>
 
             <el-form-item label="用户名">
-                <el-input v-model="form.name"></el-input>
+                <el-input v-model="form.admin"></el-input>
             </el-form-item>
+
 
             <el-form-item label="昵称" class="gender">
                 <el-input v-model="form.name"></el-input>
@@ -23,6 +24,7 @@
 
             <el-form-item label="性别" class="gender">
                 <el-radio-group v-model="form.resource">
+
                     <el-radio label="男"></el-radio>
                     <el-radio label="女"></el-radio>
                 </el-radio-group>
@@ -42,7 +44,8 @@
             </el-form-item>
 
             <el-form-item label="手机">
-                <el-input v-model="form.name"></el-input>
+
+                <el-input v-model="form.iphone"></el-input>
             </el-form-item>
 
             <el-form-item
@@ -83,7 +86,7 @@
 
         options: [
             {value: '01', label: '管理员',disabled: true}, 
-            {value: '02', label: '超级管理员'}
+            {value2: '02', label: '超级管理员'}
         ],
 
         dynamicValidateForm: {

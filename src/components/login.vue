@@ -1,6 +1,8 @@
 <template>
     <div class="content">
+
         <div class="logo">
+
             <img src="../assets/fankelogo.jpg" height="130" width="450" alt="" />
         </div>
         <h2>凡客后台管理系统</h2>
@@ -81,15 +83,21 @@
                     return data;
                 })(),
           }).then(res=>{
-              console.log(res)
+              console.log(res.data)
+              if(res.data === '登录成功'){
+                  sessionStorage.setItem('token',res.data);
+                  this.$router.push({path:'home/fenlei'});
+              }else{        
+                    this.$message('密码或用户名失败');       
+              }
           })
-          if (valid) {
-            // alert('submit!');
-            // this.$router.push({path:'home/fenlei'});
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
+          // if (valid) {
+            
+          //   this.$router.push({path:'home/fenlei'});
+          // } else {
+          //   console.log('error submit!!');
+          //   return false;
+          // }
         });
       },
       resetForm(formName) {
@@ -113,5 +121,8 @@
     h2,.logo{
       text-align: center;
     }
-
+    .el-input{
+      width:80%;
+    }
+      
 </style>

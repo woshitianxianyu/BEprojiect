@@ -1,5 +1,6 @@
 <template>
     <div>
+
       <el-header class="header" height>
         <h1>凡客后台管理系统</h1>
         <div class="welcome">
@@ -37,6 +38,8 @@
           </el-col>
         </el-row>
       </el-aside>
+
+      
 
                 <el-main class="main">
                     <router-view/>
@@ -113,12 +116,14 @@
       },
       handleClose(key, keyPath) {
         // console.log(key, keyPath);
+
       },
       getmenu(id){
         console.log(id)
         this.$router.push({path:'/home/'+id});
       }
     },
+    
 
   }
 </script>
