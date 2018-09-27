@@ -14,14 +14,16 @@
         <el-button type="primary" @click="onSubmit" icon="el-icon-search"></el-button>
       </el-form-item>
     </el-form>
+
     <el-row class="button">
       <el-button type="primary">删除</el-button>
       <el-button type="primary">添加</el-button>
     </el-row>
+
     <el-table
       border
       ref="multipleTable"
-      :data="tableData"
+      :data="goodslist"
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange">
@@ -35,12 +37,12 @@
         width="80">
       </el-table-column>
       <el-table-column fiexd
-        prop="class"
+        prop="goodstype"
         label="商品分类"
         width="100">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="goodsname"
         label="商品名称">
       </el-table-column>
       <el-table-column
@@ -48,13 +50,13 @@
         label="价格"
         width="80">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="date"
         label="上传时间"
         width="100">
-      </el-table-column>
-      <el-table-column
-        prop="status"
+      </el-table-column> -->
+      <el-table-column 
+        prop="state"
         label="发布状态"
         width="100">
       </el-table-column>
@@ -67,6 +69,19 @@
         </template>
       </el-table-column>
     </el-table> 
+
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 15]"
+        :page-size="10"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="100">
+      </el-pagination>
+    </div>
+
   </div> 
 </template>
 
@@ -74,29 +89,31 @@
   export default { 
     data() {
       return {
-        tableData: [{
-          id: '001',
-          class: '美食',
-          name:'水煮鱼',
-          price:'48.00',
-          date:'2018-9-24',
-          status:'已发布',
-        },{
-          id: '001',
-          class: '美食',
-          name:'水煮鱼',
-          price:'48.00',
-          date:'2018-9-24',
-          status:'已发布',
-        },],
+        goodslist:[],
 
-      formInline: {
-          user: '',
-          region: ''
-        }
+        formInline: {
+            user: '',
+            region: ''
+        },
+        currentPage: 1,
+
+        // page:'',
+        // qty:''
       }
     },
+
     methods: {
+      getGoodslist() {
+        this.$axios({
+          method:'post',
+          url:'http://10.3.137.11:8888/goodslist',
+          // page:this.page,
+          // qty:this.qty
+        }).then(res => {
+          this.goodslist = res.data;
+          console.log(this.goodslist)
+        })
+      },
       setCurrent(row) {
         this.$refs.singleTable.setCurrentRow(row);
       },
@@ -108,7 +125,7 @@
       
       // 删除当前行
       handleDelete(index, row) {
-        console.log(index, row);
+        this.goodslist.splice(index,1)
       },
 
       // 选择切换
@@ -123,9 +140,9 @@
       },
 
       // current-change:当表格的当前行发生变化的时候会触发该事件
-      handleCurrentChange(val) {
-        this.currentRow = val;
-      },
+      // handleCurrentChange(val) {
+      //   this.currentRow = val;
+      // },
 
       // selection-change:当选择项发生变化时会触发该事件
       handleSelectionChange(val) {
@@ -135,11 +152,22 @@
       // 查找分类
       onSubmit() {
         console.log('submit!');
+      },
+
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
       }
+    },
+    created() {
+      this.getGoodslist();
     }
   }
 </script>
 <style>
   .goods{text-align:left}
   .button{padding:10px 0;border-top:1px solid #eee;}
+  .block{padding:10px 0;text-align:center;}
 </style>

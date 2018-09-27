@@ -1,6 +1,8 @@
 <template>
     <div class="content">
-        <div class="logo" style="text-aline:center">
+
+        <div class="logo">
+
             <img src="../assets/fankelogo.jpg" height="130" width="450" alt="" />
         </div>
         <h2>凡客后台管理系统</h2>

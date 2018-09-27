@@ -5,7 +5,7 @@
             <el-form-item label="我的角色">
                 <el-select v-model="form.region" placeholder="请选择角色">
                     <el-option
-                        v-for="(item,i) in options"
+                        v-for="(item) in options"
                         :key="item.value"
                         :label="item.label"
                         :disabled="item.disabled">
@@ -17,12 +17,14 @@
                 <el-input v-model="form.admin"></el-input>
             </el-form-item>
 
-            <el-form-item label="昵称">
-                <el-input v-model="form.nickname"></el-input>
+
+            <el-form-item label="昵称" class="gender">
+                <el-input v-model="form.name"></el-input>
             </el-form-item>
 
-            <el-form-item label="性别">
-                <el-radio-group v-model="form.gender">
+            <el-form-item label="性别" class="gender">
+                <el-radio-group v-model="form.resource">
+
                     <el-radio label="男"></el-radio>
                     <el-radio label="女"></el-radio>
                 </el-radio-group>
@@ -123,4 +125,5 @@
 <style>
     p{font-size:14px;line-height: 14px;margin-bottom:15px;padding-bottom:15px;border-bottom:1px solid #eee;}
    .el-input{width: 300px;}
+   .gender{margin:0;}
 </style>
