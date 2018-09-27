@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-        <div>
+        <div class="logo">
             <img src="../assets/fankelogo.jpg" height="130" width="450" alt="" />
         </div>
         <h2>凡客后台管理系统</h2>
@@ -110,7 +110,7 @@
         top:50%;
         transform:translate(-50%, -50%);
     }
-    h2{
+    h2,.logo{
       text-align: center;
     }
 

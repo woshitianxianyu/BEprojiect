@@ -7,6 +7,7 @@
             </el-form-item>
             <el-form-item label="新密码" prop="pass">
                 <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                <span>&nbsp;6-16个字符</span>
             </el-form-item>
             <el-form-item label="确认新密码" prop="checkPass">
                 <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
