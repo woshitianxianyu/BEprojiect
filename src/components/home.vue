@@ -1,6 +1,6 @@
 <template>
     <div>
-        <elcontainer>
+      
            <el-header class="header">
               <!--  <h1>凡客后台管理系统</h1> -->
                <span>
@@ -30,7 +30,7 @@
                         <span>{{tab.title}}</span>
                       </template>
                       <el-menu-item-group v-for="(item,i) in tab.items">
-                      <el-menu-item :id="item.id"  :index="tab.idx +'-'+ i" @click.bative="getmenu(item.id)" >{{item.name}}</el-menu-item>
+                      <el-menu-item :id="item.id"  :index="tab.idx +'-'+ i" @click.native="getmenu(item.id)" >{{item.name}}</el-menu-item>
                       
                       </el-menu-item-group>
                   
@@ -117,12 +117,14 @@
       },
       handleClose(key, keyPath) {
         // console.log(key, keyPath);
+
       },
       getmenu(id){
         console.log(id)
         this.$router.push({path:'/home/'+id});
       }
     },
+    
 
   }
 </script>

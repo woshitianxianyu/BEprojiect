@@ -67,7 +67,7 @@
           id: '003',
           class: '美食',
         }],
-        currentPage: '',
+        currentPage: 1,
       }
     },
     methods: {
