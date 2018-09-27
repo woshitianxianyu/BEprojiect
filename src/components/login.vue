@@ -86,7 +86,7 @@
                   sessionStorage.setItem('token',res.data);
                   this.$router.push({path:'home/fenlei'});
               }else{        
-                    this.$message('密码或用户名失败');       
+                    // this.$message('密码或用户名失败');       
               }
           })
           // if (valid) {
