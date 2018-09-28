@@ -1,6 +1,8 @@
 <template>
     <div class="content">
-        <div class="logo" style="text-aline:center">
+
+        <div class="logo">
+
             <img src="../assets/fankelogo.jpg" height="130" width="450" alt="" />
         </div>
         <h2>凡客后台管理系统</h2>
@@ -84,18 +86,25 @@
               console.log(res.data)
               if(res.data === '登录成功'){
                   sessionStorage.setItem('token',res.data);
-                  this.$router.push({path:'home/fenlei'});
+                  // console.log(this.ruleForm2.pass,this.ruleForm2.checkPass)
+                  this.$router.push({
+                    name:'home',
+                    params:{
+                      name:this.ruleForm2.pass,
+                      pass:this.ruleForm2.checkPass
+                    }
+
+                  })
+             
+                  
+
               }else{        
-                    // this.$message('密码或用户名失败');       
+                    this.$message('密码或用户名失败');
+                    // console.log(this.$router);
+
               }
           })
-          // if (valid) {
-            
-          //   this.$router.push({path:'home/fenlei'});
-          // } else {
-          //   console.log('error submit!!');
-          //   return false;
-          // }
+         
         });
       },
       resetForm(formName) {

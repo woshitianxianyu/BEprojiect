@@ -27,34 +27,48 @@ let router =  new Router({
           name: 'home',
           component: home,
           meta: { requiresAuth: true },
+          props:function(route){
+            console.log(route.params);
+            return Object.assign({},route.params)
+          },
+          // props:true,
+
           children:[
             {
               path:'goodslist',
-              name:goodslist,
+              name:'goodslist',
               component:goodslist,
               meta: { requiresAuth: true },
             },
             {
               path:'fenlei',
-              name:fenlei,
+              name:'fenlei',
               component:fenlei,
               meta: { requiresAuth: true },
             },
             {
               path:'updatapass',
-              name:updatapass,
+              name:'updatapass',
               component:updatapass,
               meta: { requiresAuth: true },
+              props:function(route){
+              console.log(route.params);
+              return Object.assign({},route.params)
+              },
             },
             {
               path:'Data_management',
-              name:Data_management,
+              name:'Data_management',
               component:Data_management,
               meta: { requiresAuth: true },
+              props:function(route){
+              console.log(route.params);
+              return Object.assign({},route.params)
+              },
             },
             {
               path:'orderList',
-              name:orderList,
+              name:'orderList',
               component:orderList,
               meta: { requiresAuth: true },
             },

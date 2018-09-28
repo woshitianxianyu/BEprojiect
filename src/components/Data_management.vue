@@ -1,10 +1,11 @@
 <template>
     <div class="updatapass">
         <p>设置我的资料</p>
-        <el-form ref="form"   label-width="80px" >
+        <el-form ref="form"  :module="form"  label-width="80px"  >
             <el-form-item label="我的角色">
                 <el-select v-model="form.region" placeholder="请选择角色">
                     <el-option
+
                         :value="form.region"
                         v-for="(item, idx) in options"
                         :key="idx"
@@ -15,17 +16,22 @@
             </el-form-item>
 
             <el-form-item label="用户名">
-                <el-input v-model="form.name"></el-input>
+                <el-input v-model="name" readonly="readonly"></el-input>
             </el-form-item>
 
+
             <el-form-item label="昵称" class="gender">
-                <el-input v-model="form.nickname"></el-input>
+                <el-input v-model="user.nickname"></el-input>
             </el-form-item>
 
             <el-form-item label="性别" class="gender">
-                <el-radio-group v-model="form.gender">
+                <el-radio-group v-model="user.gender">
                     <el-radio value="男" label="男" ></el-radio>
                     <el-radio value="女" label="女"></el-radio>
+
+           
+
+          
                 </el-radio-group>
             </el-form-item>
 
@@ -44,18 +50,18 @@
             </el-form-item>
 
             <el-form-item label="手机">
-                <el-input v-model="form.phone"></el-input>
+                <el-input v-model="user.phone"></el-input>
             </el-form-item>
 
             <el-form-item
                 prop="email"
                 label="邮箱"
                 >
-                <el-input v-model="form.email"></el-input>
+                <el-input v-model="user.email"></el-input>
             </el-form-item>
 
             <el-form-item label="备注">
-                <el-input type="textarea" v-model="form.desc"></el-input>
+                <el-input type="textarea" v-model="user.remark"></el-input>
             </el-form-item>
 
             <el-form-item>
@@ -67,10 +73,11 @@
 
 <script>
   export default {
+    props:['name'],
     data() {
       return {
         form: {
-          name: '',
+          name: this.name,
           region: '',
           gender: '',
           nickname: '',
@@ -82,7 +89,8 @@
           email: '',
 
         },
-
+        user:{},
+        
         options: [
             { label: '管理员'}, 
             { label: '超级管理员'},
@@ -103,15 +111,15 @@
           url:'/api/data_management',
           data: (()=>{
                     let data = '';
-                    for(let key in this.form){
-                        data += key + '=' + this.form[key] + '&'
+                    for(let key in this.user){
+                        data += key + '=' + this.user[key] + '&'
                     }
                     data = data.slice(0);
                     console.log(data)
                     return data;
                 })(),
         }).then(res => {
-          this.form = res.data;
+          
         })
       },
         // 点击提交修改
@@ -130,7 +138,15 @@
         console.log(file);
       },
     },
+    created(){
+        console.log(this.name)
+        this.$axios.get('/api/user?name='+this.name).then(res=>{
+            var data = res.data;
+            this.user = data[0];
 
+            console.log(res.data[0])
+        })
+    }
   }
 </script>
 

@@ -3,10 +3,11 @@
         <p>修改密码</p>
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="当前密码" prop="password">
-                <el-input type="password" v-model.number="ruleForm.password"></el-input>
+                <el-input type="password" v-model="Pass">{{Pass}}</el-input>
             </el-form-item>
             <el-form-item label="新密码" prop="pass">
                 <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                <span>&nbsp;6-16个字符</span>
             </el-form-item>
             <el-form-item label="确认新密码" prop="checkPass">
                 <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
@@ -20,7 +21,9 @@
 
 <script>
   export default {
+    props:['name','pass'],
     data() {
+      console.log(this.name,this.pass)
       var oldPass = (rule, value, callback) => {
         if (value !== this.ruleForm.oldPass) {
           callback(new Error('密码输入有误'));
@@ -56,6 +59,9 @@
           checkPass: '',
           oldPass: ''
         },
+        user:{},
+        username:this.name,
+        Pass:this.pass,
         rules: {
           pass: [
             { validator: validatePass, trigger: 'blur' }
@@ -72,6 +78,24 @@
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
+            this.$axios({
+            method:'post',
+            url:'/api/personData',
+            data: (()=>{
+                      let data = '';
+                      for(let key in this.ruleForm){
+                          data += key + '=' + this.ruleForm[key] + '&'
+                      }
+                      data = data.slice(0)+'name='+this.name;
+                      // date += 'name=+"'+this.name+'"';
+                      console.log(data)
+                      return data;
+                  })(),
+          }).then(res => {
+          
+        })
+
+
           if (valid) {
             alert('submit!');
           } else {
@@ -83,6 +107,15 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
       }
+    },
+    created(){
+        console.log(this.name)
+        this.$axios.get('/api/user?name='+this.name).then(res=>{
+            var data = res.data;
+            this.user = data[0];
+
+            console.log(res.data[0])
+        })
     }
   }
 </script>

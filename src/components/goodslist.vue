@@ -14,14 +14,16 @@
         <el-button type="primary" @click="onSubmit" icon="el-icon-search"></el-button>
       </el-form-item>
     </el-form>
+
     <el-row class="button">
       <el-button type="primary">删除</el-button>
       <el-button type="primary">添加</el-button>
     </el-row>
+
     <el-table
       border
       ref="multipleTable"
-      :data="tableData"
+      :data="goodslist.slice((currentPage-1)*pagesize,currentPage*pagesize)"
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange">
@@ -35,12 +37,12 @@
         width="80">
       </el-table-column>
       <el-table-column fiexd
-        prop="class"
+        prop="goodstype"
         label="商品分类"
         width="100">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="goodsname"
         label="商品名称">
       </el-table-column>
       <el-table-column
@@ -48,13 +50,13 @@
         label="价格"
         width="80">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="date"
         label="上传时间"
         width="100">
-      </el-table-column>
-      <el-table-column
-        prop="status"
+      </el-table-column> -->
+      <el-table-column 
+        prop="state"
         label="发布状态"
         width="100">
       </el-table-column>
@@ -67,6 +69,42 @@
         </template>
       </el-table-column>
     </el-table> 
+
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="current_change"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 15]"
+        :page-size="10"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total" >
+      </el-pagination>
+    </div>
+        <el-dialog title="修改商品信息" :visible.sync="dialogFormVisible">
+      <el-form >
+          <el-form-item label="ID" :label-width="formLabelWidth" disabled="disabled">
+          <el-input v-model="currentRow.id" autocomplete="off" readonly="readonly"></el-input>
+          </el-form-item>
+          <el-form-item label="商品分类" :label-width="formLabelWidth">
+          <el-input v-model="currentRow.goodstype" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="商品名称" :label-width="formLabelWidth">
+          <el-input v-model="currentRow.goodsname" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="价格" :label-width="formLabelWidth">
+          <el-input v-model="currentRow.price" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="发布状态" :label-width="formLabelWidth">
+          <el-input v-model="currentRow.state" autocomplete="off"></el-input>
+          </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div> 
 </template>
 
@@ -74,29 +112,37 @@
   export default { 
     data() {
       return {
-        tableData: [{
-          id: '001',
-          class: '美食',
-          name:'水煮鱼',
-          price:'48.00',
-          date:'2018-9-24',
-          status:'已发布',
-        },{
-          id: '001',
-          class: '美食',
-          name:'水煮鱼',
-          price:'48.00',
-          date:'2018-9-24',
-          status:'已发布',
-        },],
+        goodslist:[],
 
-      formInline: {
-          user: '',
-          region: ''
-        }
+
+        total:0,//默认数据总数
+        pagesize:7,//每页的数据条数
+        currentPage:1,//默认开始页面
+    
+
+        formInline: {
+            user: '',
+            region: ''
+        },
+        currentRow:{},
+        dialogFormVisible: false,
+        formLabelWidth: '120px',
+     
+
       }
     },
+
     methods: {
+      getGoodslist() {
+        this.$axios.get('/api/goodslist').then(res => {
+          this.goodslist = res.data;
+          this.total = this.goodslist.length;
+          console.log(res)
+        })
+      },
+      current_change(currentPage){
+           this.currentPage = currentPage;
+      },
       setCurrent(row) {
         this.$refs.singleTable.setCurrentRow(row);
       },
@@ -104,11 +150,13 @@
       // 编辑当前行
       handleEdit(index, row) {
         console.log(index, row);
+        this.dialogFormVisible = true;
+        this.currentRow = row;
       },
       
       // 删除当前行
       handleDelete(index, row) {
-        console.log(index, row);
+        this.goodslist.splice(index,1)
       },
 
       // 选择切换
@@ -123,9 +171,9 @@
       },
 
       // current-change:当表格的当前行发生变化的时候会触发该事件
-      handleCurrentChange(val) {
-        this.currentRow = val;
-      },
+      // handleCurrentChange(val) {
+      //   this.currentRow = val;
+      // },
 
       // selection-change:当选择项发生变化时会触发该事件
       handleSelectionChange(val) {
@@ -135,11 +183,22 @@
       // 查找分类
       onSubmit() {
         console.log('submit!');
+      },
+
+      handleSizeChange(pagesize) {
+        console.log(`每页 ${pagesize} 条`);
+      },
+      handleCurrentChange(pagesize) {
+        console.log(`当前页: ${pagesize}`);
       }
+    },
+    created() {
+      this.getGoodslist();
     }
   }
 </script>
 <style>
   .goods{text-align:left}
   .button{padding:10px 0;border-top:1px solid #eee;}
+  .block{padding:10px 0;text-align:center;}
 </style>
