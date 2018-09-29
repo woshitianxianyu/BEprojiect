@@ -16,7 +16,7 @@ Vue.prototype.$ajax = axios;
 import {Loading} from 'element-ui';
 let loadinginstace;
 
-//请求拦截
+// 请求拦截
 // axios.interceptors.request.use(config =>{
 //     console.log('请求拦截：',config)
 

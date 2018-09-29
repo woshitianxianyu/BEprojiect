@@ -24,7 +24,7 @@
       </el-table-column>
 
       <el-table-column
-        property="class"
+        property="typename"
         label="分类名">
       </el-table-column>
 
@@ -45,16 +45,7 @@
   export default { 
     data() {
       return {
-        tableData: [{
-          id: '001',
-          class: '美食',
-        },{
-          id: '002',
-          class: '美食',
-        },{
-          id: '003',
-          class: '美食',
-        }],
+        tableData: [],
         currentPage: 1,
       }
     },
@@ -75,6 +66,13 @@
         this.currentRow = val;
       },
  
+    },
+    created(){
+        this.$axios.get('/api/fenlei').then(res=>{
+            console.log(res.data)
+            this.tableData = res.data;
+
+        })
     }
   }
 </script>
