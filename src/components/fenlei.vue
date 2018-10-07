@@ -1,7 +1,7 @@
 <template>
   <div  class="fenlei">
     <el-row class="add">
-      <el-button type="primary">添加</el-button>
+      <el-button type="primary" @click="addtype">添加</el-button>
     </el-row>
     <el-table
       max-height="500"
@@ -37,7 +37,21 @@
         </template>
       </el-table-column>
     </el-table>
-
+     <el-dialog :title="title" :visible.sync="dialogFormVisible">
+        <el-form >
+           <el-form-item label="ID" :label-width="formLabelWidth" disabled="disabled">
+          <el-input v-model="currentRow.id" autocomplete="off" readonly="readonly"></el-input>
+          </el-form-item>
+          <el-form-item label="分类名" :label-width="formLabelWidth">
+          <el-input v-model="currentRow.typename" autocomplete="off"></el-input>
+          </el-form-item>
+          
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="savegoods">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -47,32 +61,78 @@
       return {
         tableData: [],
         currentPage: 1,
+        currentRow:{},
+        title:'添加分类名',
+        dialogFormVisible: false,
+        formLabelWidth: '100px',
       }
     },
     methods: {
-      handleEdit(index, row) {
-        console.log(index, row);
-        
-      },
-      handleDelete(index, row) {
-        this.tableData.splice(index,1)
-      },
-      addRow() {
-
-      },
 
       // current-change:当表格的当前行发生变化的时候会触发该事件
       handleCurrentChange(val) {
         this.currentRow = val;
       },
+      setCurrent(row) {
+        this.$refs.singleTable.setCurrentRow(row);
+      },
  
-    },
-    created(){
+      handleEdit(index, row) {
+        console.log(index, row);
+        this.title= "修改商品信息";
+        this.dialogFormVisible = true;
+        this.currentRow = row;
+        
+      },
+      handleDelete(index, row) {
+        console.log(index, row.id);
+        // this.$axios.get('/api/delectfenlei?id='+row.id).then(res =>{
+        //   this.tableData = res.data
+        // })
+        // this.tableData.splice(index,1)
+      },
+      addtype(){
+        this.currentRow = {}
+        this.dialogFormVisible = true
+      },
+      savegoods(){
+        this.dialogFormVisible = false;
+          this.$axios({
+            url:'/api/addfenlei',
+            method:'post',
+            data:(()=>{
+                    let data = '';
+                    for(let key in this.currentRow){
+                        data += key + '=' + this.currentRow[key] + '&'
+                    }
+                    data = data.slice(0);
+                    console.log(data)
+                    return data;
+                })(),
+
+
+         }).then(res =>{
+          console.log(res)
+
+        }) 
+         this.getfenlei();
+      },
+      getfenlei(){
         this.$axios.get('/api/fenlei').then(res=>{
             console.log(res.data)
             this.tableData = res.data;
 
         })
+      },
+
+
+
+    },
+    created(){
+     
+        this.getfenlei()
+     
+        
     }
   }
 </script>

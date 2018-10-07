@@ -24,12 +24,12 @@
               text-color="#fff"
               active-text-color="#ffd04b">
 
-                  <el-submenu :index="idx+1+''"  v-for="(tab,idx) in tabs" >
+                  <el-submenu :index="idx+1+''"  v-for="(tab,idx) in tabs"  :key='idx'>
                     <template slot="title" >
                       <i :class=" 'el-icon-'+tab.icon"></i>
                       <span>{{tab.title}}</span>
                     </template>
-                    <el-menu-item-group v-for="(item,i) in tab.items">
+                    <el-menu-item-group v-for="(item,i) in tab.items" :key='i'>
                       <el-menu-item :id="item.id"  :index="tab.idx +'-'+ i" @click.bative="getmenu(item.id)" >{{item.name}}</el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
@@ -82,6 +82,10 @@
               {
                 id:'Data_management',
                 name:"资料管理",
+              },
+              {
+                id:'user_management',
+                name:"用户管理",
               }
 
 

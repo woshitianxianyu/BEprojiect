@@ -7,6 +7,7 @@ import fenlei from '@/components/fenlei'
 import updatapass from '@/components/updatapass'
 import Data_management from '@/components/Data_management'
 import orderList from '@/components/orderList'
+import user_management from '@/components/user_management'
 
 Vue.use(Router)
 
@@ -15,6 +16,7 @@ let router =  new Router({
 
         {
           path:'/',
+          redirect:'/home',
         },
         {
           path: '/login',
@@ -59,6 +61,16 @@ let router =  new Router({
               path:'Data_management',
               name:'Data_management',
               component:Data_management,
+              meta: { requiresAuth: true },
+              props:function(route){
+              console.log(route.params);
+              return Object.assign({},route.params)
+              },
+            },
+            {
+              path:'user_management',
+              name:'user_management',
+              component:user_management,
               meta: { requiresAuth: true },
               props:function(route){
               console.log(route.params);
