@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2018-09-30 09:54:06
+Date: 2018-10-08 14:54:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,7 +58,7 @@ INSERT INTO `goodslist` VALUES ('022', '村衫', '衬衫 易打理 短袖 领尖
 DROP TABLE IF EXISTS `login`;
 CREATE TABLE `login` (
   `id` int(3) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `admin` varchar(255) DEFAULT NULL,
+  `admin` varchar(255) NOT NULL,
   `pass` varchar(255) DEFAULT NULL,
   `Role` varchar(255) DEFAULT NULL,
   `nickname` varchar(255) DEFAULT NULL,
@@ -67,31 +67,42 @@ CREATE TABLE `login` (
   `phone` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `asse` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of login
 -- ----------------------------
-INSERT INTO `login` VALUES ('001', '老王', '666', '超级管理员', '犬夜叉', '男', null, '13888888', '123@ee.com', '这个人很懒啥都没写');
-INSERT INTO `login` VALUES ('002', 'yk', '123456', '超级管理员', '网文asda', '男', null, '1566666666243234', '123@ee.com', '这个人很懒啥都没写');
-INSERT INTO `login` VALUES ('007', 'laoxie', '123', null, null, null, null, '123456', null, null);
+INSERT INTO `login` VALUES ('017', 'yk', null, '管理员', null, null, null, '16666666666', '456@ff.com', null, '2018-10-08 11:35:26', '已审核');
+INSERT INTO `login` VALUES ('016', 'yk', '666666', '管理员', null, null, null, '16666666666', '456@ff.com', null, '2018-10-08 08:56:57', '已审核');
+INSERT INTO `login` VALUES ('013', 'sx', '666666', '超级无敌管理员', '时光不再', '男', null, '17888888888', 'rr@77.com', '灵感的世界', '2018-10-07 13:36:30', '已审核');
 
 -- ----------------------------
 -- Table structure for typelist
 -- ----------------------------
 DROP TABLE IF EXISTS `typelist`;
 CREATE TABLE `typelist` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `id` int(3) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `typename` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of typelist
 -- ----------------------------
-INSERT INTO `typelist` VALUES ('0000000001', '村衫');
-INSERT INTO `typelist` VALUES ('0000000002', '卫衣');
-INSERT INTO `typelist` VALUES ('0000000003', '鞋');
-INSERT INTO `typelist` VALUES ('0000000004', '棉衣');
+INSERT INTO `typelist` VALUES ('014', '衬衫');
+INSERT INTO `typelist` VALUES ('013', '手套');
+INSERT INTO `typelist` VALUES ('012', '袜子');
+INSERT INTO `typelist` VALUES ('011', '鞋子');
+INSERT INTO `typelist` VALUES ('009', '棉衣');
+INSERT INTO `typelist` VALUES ('010', '卫衣');
+INSERT INTO `typelist` VALUES ('019', '裙子1号');
+INSERT INTO `typelist` VALUES ('016', '裤子');
+INSERT INTO `typelist` VALUES ('018', '裙子');
+INSERT INTO `typelist` VALUES ('020', '手套');
+INSERT INTO `typelist` VALUES ('021', '衬衫');
+INSERT INTO `typelist` VALUES ('022', '衣服');
+INSERT INTO `typelist` VALUES ('023', '衣服1');
 SET FOREIGN_KEY_CHECKS=1;
