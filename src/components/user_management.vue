@@ -191,7 +191,6 @@
       //添加商品信息
       savegoods(){
         this.dialogFormVisible = false;
-
         console.log(this.currentRow.goodsname)
          this.$axios({
             url:'/api/adduser',
